@@ -1,7 +1,26 @@
 import React, { useEffect } from 'react'
 import { Text, View, Button } from 'react-native'
-import api from './src/services/api'
+import api, { deleteAuthToken, setAuthToken } from './src/services/api'
 
+
+export const login = async (email, password) => {
+  try {
+    const payload = {
+      email,
+      password
+    }
+    const { data } = await api.post('/login', payload)
+    const { user, token } = data
+    setAuthToken(token)
+    console.log(user)
+  } catch (error) {
+    console.log(error)    
+  }
+}
+
+export const logout = () => {
+  deleteAuthToken()
+}
 const App = () => {
   // const url = 'https://jsonplaceholder.typicode.com/todos/201'
 
